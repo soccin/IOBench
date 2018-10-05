@@ -1,0 +1,6 @@
+loops=as.numeric(commandArgs(trailing=T)[1])
+num=as.numeric(commandArgs(trailing=T)[2])
+tic=proc.time()
+for(i in seq(loops))
+    xx=runif(1e6*num)
+cat(num,loops,"Millon",proc.time()-tic,"\n")
