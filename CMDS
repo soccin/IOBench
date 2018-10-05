@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MAXCORES=64
+
+JOB=$1
+NUM=$2
+TAG=$(echo $NUM | awk '{printf("%02d\n",$1)}')
+find data | fgrep .bam | head -1000 \
+    | xargs ls -s | sort -n | egrep -v LU783588-N | head -40 | tail -$NUM | awk '{print $2}' \
+    | xargs bsub -o LSF/${JOB}_${TAG}_$$ -We 119 -J ${JOB}_$TAG -n $MAXCORES -R "rusage[mem=249]" ./${JOB}.sh
